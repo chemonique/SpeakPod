@@ -1,26 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import Navbar from './components/Navbar';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Library from './pages/library';
-import Home from './pages/home';
-
+import Navbar from "./components/Navbar/NavBar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Favorites from "./pages/favorites";
+import Home from "./pages/home";
 
 function App() {
- 
-  
   return (
     <div>
       <Router>
         <Navbar />
         <Routes>
-          <Route
-            path="/home"
-            element={<Home />}
-          />
-          <Route path="/library" element={<Library  />} />
-              
-           </Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />} />
+        </Routes>
       </Router>
     </div>
   );
