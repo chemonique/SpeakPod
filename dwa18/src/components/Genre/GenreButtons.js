@@ -1,13 +1,14 @@
 import React from "react";
 import genre_mapping from "./Genre";
+import classes from "./GenreButton.module.css";
 
 function GenreButtons({ selectedGenre, setSelectedGenre }) {
   return (
-    <div className="genre-list">
+    <div className={classes.list}>
       {Object.entries(genre_mapping).map(([genreId, genreTitle]) => (
         <button
           key={genreId}
-          className={`genre-button ${
+          className={`${classes.button} ${
             selectedGenre === genreId ? "selected" : ""
           }`}
           onClick={() =>

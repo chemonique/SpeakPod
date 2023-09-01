@@ -1,7 +1,8 @@
 import React from "react";
 import ShowSeasons from "./ShowSeasons"; // New component for show seasons
+import Modal from "./Modal";
 
-import genre_mapping from "./Genre";
+import genre_mapping from "./Genre/Genre";
 
 function ShowCard({
   show,
@@ -28,8 +29,14 @@ function ShowCard({
       {currentShowId === show.id && (
         <div className="show-details">
           <div>
-            {currentShowId === show.id && <ShowSeasons showId={show.id} />}
-            <button onClick={() => setCurrentShowId(null)}>Close</button>
+            {currentShowId === show.id && (
+              <Modal
+                showId={show.id}
+                img={show.image}
+                title={show.title}
+                description={show.description}
+              />
+            )}
           </div>
         </div>
       )}

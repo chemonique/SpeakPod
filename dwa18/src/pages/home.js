@@ -3,7 +3,7 @@ import Fuse from "fuse.js";
 
 import ShowCard from "../components/ShowCards"; // New component for individual show card
 import FilterBar from "../components/FilterBar"; // New component for filter bar
-import GenreButtons from "../components/GenreButtons"; // New component for genre buttons
+import GenreButtons from "../components/Genre/GenreButtons"; // New component for genre buttons
 // import ShowDetails from "./ShowDetails"; // New component for show details
 
 import "./home.css";
