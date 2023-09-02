@@ -1,18 +1,14 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
+
 import Modal from "react-bootstrap/Modal";
+import classes from "./Modal.module.css";
 
 import ShowSeasons from "./ShowSeasons";
 
 function SeasonModal({ showId, img, title, description }) {
   const values = [true];
-  const [fullscreen, setFullscreen] = useState(true);
+  // const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(true);
-
-  //   function handleShow(breakpoint) {
-  //     setFullscreen(breakpoint);
-  //     setShow(true);
-  //   }
 
   return (
     <>
@@ -21,11 +17,10 @@ function SeasonModal({ showId, img, title, description }) {
       )}
       <Modal show={show} fullscreen onHide={() => setShow(false)}>
         <Modal.Header closeButton></Modal.Header>
-        <Modal.Body>
-          {console.log(showId)}
-          <img src={img} alt={title} />
-          <h2 className="title">{title}</h2>
-          <p>{description}</p>
+        <Modal.Body className={classes.modal}>
+          <img src={img} alt={title} className={classes.image} />
+          <h2 className={classes.title}>{title}</h2>
+          <p className={classes.description}>{description}</p>
           <ShowSeasons showId={showId} />
         </Modal.Body>
       </Modal>

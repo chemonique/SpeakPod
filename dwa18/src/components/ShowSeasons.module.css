@@ -1,0 +1,28 @@
+.optionSeason {
+  text-align: center;
+}
+
+.showseasons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 30px;
+}
+
+.image {
+  width: 220px;
+  height: 220px;
+  /* margin-bottom: 10px; */
+  border-radius: 20%;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  padding: 40px;
+}
+
+.epibutton {
+  width: fit-content;
+}

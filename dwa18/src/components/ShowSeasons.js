@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import classes from "./ShowSeasons.module.css";
+import SeasonEpisodes from "./ShowEpisodes";
 import AudioPlayer from "../components/AudioPlayer";
 import SortOptions from "../components/SortOptions";
 import FavoriteEpisodes from "../components/FavoriteEpisodes";
@@ -8,12 +11,17 @@ import FavoriteEpisodes from "../components/FavoriteEpisodes";
 function ShowSeasons({ showId }) {
   // State and useEffect hooks go here
   const [seasons, setSeasons] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [playingEpisode, setPlayingEpisode] = useState(null);
+  const [showEpisodes, setShowEpisodes] = useState(false);
+  const [epiShowId, setEpiShowId] = useState(null);
+
+  const [selectedSeason, setSelectedSeason] = useState(null);
   const [userConfirmation, setUserConfirmation] = useState(true);
-  const [favoriteEpisodes, setFavoriteEpisodes] = useState([]);
-  const [sortOrder, setSortOrder] = useState("ascending"); // ascending, descending
-  const [sortType, setSortType] = useState("title"); // title, date
+  const [loading, setLoading] = useState(true);
+  // const [playingEpisode, setPlayingEpisode] = useState(null);
+
+  // const [favoriteEpisodes, setFavoriteEpisodes] = useState([]);
+  // const [sortOrder, setSortOrder] = useState("ascending"); // ascending, descending
+  // const [sortType, setSortType] = useState("title"); // title, date
 
   useEffect(() => {
     async function fetchData() {
@@ -95,63 +103,20 @@ function ShowSeasons({ showId }) {
   //   localStorage.setItem("userHistory", JSON.stringify(userHistory));
   // };
 
-  const toggleFavorite = (episode) => {
-    if (
-      favoriteEpisodes.some(
-        (favEpisode) => favEpisode.episode.episode === episode.episode
-      )
-    ) {
-      setFavoriteEpisodes(
-        favoriteEpisodes.filter(
-          (favEpisode) => favEpisode.episode.episode !== episode.episode
-        )
-      );
-    } else {
-      setFavoriteEpisodes([
-        ...favoriteEpisodes,
-        { episode, addedAt: new Date() },
-      ]);
-    }
-  };
-  const sortedFavorites = [...favoriteEpisodes];
+  // const handleSortChange = (e) => {
+  //   setSortOrder(e.target.value);
+  // };
 
-  const handleSortChange = (e) => {
-    setSortOrder(e.target.value);
-  };
-
-  const handleSortTypeChange = (e) => {
-    setSortType(e.target.value);
-  };
+  // const handleSortTypeChange = (e) => {
+  //   setSortType(e.target.value);
+  // };
 
   // Component for displaying favorite episodes
-  const fetchSeasonEpisodes = async (seasonNumber) => {
-    try {
-      const response = await fetch(
-        `https://podcast-api.netlify.app/id/${showId}`
-      );
-      const data = await response.json();
-      const { episodes } = data.seasons[seasonNumber - 1];
 
-      // Create episodeList
-      const episodeList = episodes.map((episode) => (
-        <div key={episode.episode}>
-          <p>
-            Episode {episode.episode}: {episode.title}
-          </p>
-        </div>
-      ));
-
-      // Update the state to display the episodes
-      setSeasons((prevSeasons) => {
-        const updatedSeasons = [...prevSeasons];
-        updatedSeasons[seasonNumber - 1].episodesList = episodeList;
-        return updatedSeasons;
-      });
-    } catch (error) {
-      console.error("Error fetching episodes:", error);
-    }
+  const fetchSeasonEpisodes = (showId) => {
+    setShowEpisodes(true);
+    setEpiShowId(showId);
   };
-  const [selectedSeason, setSelectedSeason] = useState(null);
 
   return (
     <div>
@@ -159,7 +124,7 @@ function ShowSeasons({ showId }) {
         <p>Loading...</p>
       ) : (
         <div>
-          <Dropdown>
+          <Dropdown className={classes.optionSeason}>
             <Dropdown.Toggle variant="secondary" id="season-dropdown">
               Select Season
             </Dropdown.Toggle>
@@ -176,28 +141,32 @@ function ShowSeasons({ showId }) {
             </Dropdown.Menu>
           </Dropdown>
           {selectedSeason && (
-            <div>
+            <div className={classes.showseasons}>
               <img
                 src={selectedSeason.image}
                 alt={`Season ${selectedSeason.season}`}
+                className={classes.image}
               />
-              <h3>Season {selectedSeason.season}</h3>
-              <h4>{selectedSeason.title}</h4>
-              <p>Episodes: {selectedSeason.episodes.length}</p>
-              <button
-                onClick={() => fetchSeasonEpisodes(selectedSeason.season)}
-              >
-                View Episodes
-              </button>
-              {selectedSeason.episodesList &&
-                selectedSeason.episodesList.map((episode) => (
-                  <div key={episode.episode}>
-                    <p>
-                      Episode {episode.episode}: {episode.title}
-                    </p>
-                    {/* ... */}
-                  </div>
-                ))}
+
+              <div className={classes.details}>
+                <h3>Season {selectedSeason.season}</h3>
+                <h4>{selectedSeason.title}</h4>
+                <p>Episodes: {selectedSeason.episodes.length}</p>
+              </div>
+              {showEpisodes ? (
+                <SeasonEpisodes
+                  showId={showId}
+                  seasonNumber={selectedSeason.season}
+                />
+              ) : (
+                <button
+                  onClick={() =>
+                    fetchSeasonEpisodes(showId, selectedSeason.season)
+                  }
+                >
+                  View Episodes
+                </button>
+              )}
             </div>
           )}
         </div>
