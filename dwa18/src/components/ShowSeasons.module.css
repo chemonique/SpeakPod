@@ -4,7 +4,7 @@
 
 .showseasons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   margin: 30px;
 }
@@ -14,15 +14,19 @@
   height: 220px;
   /* margin-bottom: 10px; */
   border-radius: 20%;
+  text-align: center;
 }
 
 .details {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
+  text-align: center;
   margin: 5px;
-  padding: 40px;
+  padding: 4px;
+  align-items: center;
+  justify-content: center;
 }
 
-.epibutton {
+.button {
   width: fit-content;
 }

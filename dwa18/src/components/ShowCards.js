@@ -1,6 +1,5 @@
 import React from "react";
-import ShowSeasons from "./ShowSeasons"; // New component for show seasons
-import Modal from "./Modal";
+import SeasonModal from "./SeasonModal";
 
 import genre_mapping from "./Genre/Genre";
 
@@ -21,6 +20,7 @@ function ShowCard({
           .map((selectedGenre) => genre_mapping[selectedGenre])
           .join(", ")}
       </p>
+
       <p>Seasons: {show.seasons}</p>
       <p>Last Updated: {new Date(show.updated).toLocaleDateString()}</p>
       <button className="seeMore" onClick={() => fetchShowDetails(show.id)}>
@@ -30,7 +30,7 @@ function ShowCard({
         <div className="show-details">
           <div>
             {currentShowId === show.id && (
-              <Modal
+              <SeasonModal
                 showId={show.id}
                 img={show.image}
                 title={show.title}

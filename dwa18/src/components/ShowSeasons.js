@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
+import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import classes from "./ShowSeasons.module.css";
 import SeasonEpisodes from "./ShowEpisodes";
-import AudioPlayer from "../components/AudioPlayer";
-import SortOptions from "../components/SortOptions";
-import FavoriteEpisodes from "../components/FavoriteEpisodes";
 
 function ShowSeasons({ showId }) {
   // State and useEffect hooks go here
@@ -17,11 +15,6 @@ function ShowSeasons({ showId }) {
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [userConfirmation, setUserConfirmation] = useState(true);
   const [loading, setLoading] = useState(true);
-  // const [playingEpisode, setPlayingEpisode] = useState(null);
-
-  // const [favoriteEpisodes, setFavoriteEpisodes] = useState([]);
-  // const [sortOrder, setSortOrder] = useState("ascending"); // ascending, descending
-  // const [sortType, setSortType] = useState("title"); // title, date
 
   useEffect(() => {
     async function fetchData() {
@@ -39,79 +32,6 @@ function ShowSeasons({ showId }) {
 
     fetchData();
   }, [showId, userConfirmation]);
-
-  //   // Fetch and set user's listening history from localStorage
-  //   const userHistory = JSON.parse(localStorage.getItem("userHistory")) || {};
-
-  //   // Set playingEpisode from userHistory or null
-  //   setPlayingEpisode(userHistory[showId] || null);
-
-  //   // Prompt user before closing the page if audio is playing
-  //   const handleBeforeUnload = (event) => {
-  //     if (playingEpisode && userConfirmation) {
-  //       event.preventDefault();
-  //       event.returnValue = "";
-  //     }
-  //   };
-  //   window.addEventListener("beforeunload", handleBeforeUnload);
-
-  //   return () => {
-  //     window.removeEventListener("beforeunload", handleBeforeUnload);
-  //   };
-
-  // useEffect(() => {
-  //   // Update user's listening history in localStorage
-  //   if (playingEpisode) {
-  //     const userHistory = JSON.parse(localStorage.getItem("userHistory")) || {};
-  //     setPlayingEpisode(userHistory[showId] || null);
-  //   }
-  // }, [playingEpisode, showId]);
-  // // Reset progress and other event handlers
-  // const resetProgress = () => {
-  //   const userHistory = JSON.parse(localStorage.getItem("userHistory")) || {};
-  //   delete userHistory[showId];
-  //   localStorage.setItem("userHistory", JSON.stringify(userHistory));
-  //   setPlayingEpisode(null);
-  // };
-
-  // // Functions to handle play, pause, and favorites
-  // const handlePlay = (episode, timestamp) => {
-  //   setPlayingEpisode({ ...episode, timestamp });
-  // };
-
-  // const handlePlayButton = (episode) => {
-  //   setPlayingEpisode({
-  //     episode,
-  //     timestamp: 0, // Reset timestamp when starting a new episode
-  //   });
-  // };
-
-  // const handlePause = () => {
-  //   const audio = document.getElementById("audio-player");
-  //   if (audio) {
-  //     const timestamp = audio.currentTime;
-  //     if (playingEpisode) {
-  //       const completedEpisode = { ...playingEpisode, completed: true };
-  //       setPlayingEpisode({ ...completedEpisode, timestamp });
-  //       updateUserHistory(completedEpisode);
-  //     }
-  //   }
-  // };
-  // const updateUserHistory = (episode) => {
-  //   const userHistory = JSON.parse(localStorage.getItem("userHistory")) || {};
-  //   userHistory[showId] = episode;
-  //   localStorage.setItem("userHistory", JSON.stringify(userHistory));
-  // };
-
-  // const handleSortChange = (e) => {
-  //   setSortOrder(e.target.value);
-  // };
-
-  // const handleSortTypeChange = (e) => {
-  //   setSortType(e.target.value);
-  // };
-
-  // Component for displaying favorite episodes
 
   const fetchSeasonEpisodes = (showId) => {
     setShowEpisodes(true);
@@ -142,13 +62,12 @@ function ShowSeasons({ showId }) {
           </Dropdown>
           {selectedSeason && (
             <div className={classes.showseasons}>
-              <img
-                src={selectedSeason.image}
-                alt={`Season ${selectedSeason.season}`}
-                className={classes.image}
-              />
-
               <div className={classes.details}>
+                <img
+                  src={selectedSeason.image}
+                  alt={`Season ${selectedSeason.season}`}
+                  className={classes.image}
+                />
                 <h3>Season {selectedSeason.season}</h3>
                 <h4>{selectedSeason.title}</h4>
                 <p>Episodes: {selectedSeason.episodes.length}</p>
@@ -159,13 +78,15 @@ function ShowSeasons({ showId }) {
                   seasonNumber={selectedSeason.season}
                 />
               ) : (
-                <button
+                <Button
+                  className={classes.button}
+                  variant="secondary"
                   onClick={() =>
                     fetchSeasonEpisodes(showId, selectedSeason.season)
                   }
                 >
                   View Episodes
-                </button>
+                </Button>
               )}
             </div>
           )}

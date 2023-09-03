@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Modal from "react-bootstrap/Modal";
-import classes from "./Modal.module.css";
+import classes from "./SeasonModal.module.css";
 
 import ShowSeasons from "./ShowSeasons";
 

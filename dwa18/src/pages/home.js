@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Fuse from "fuse.js";
+import Fuse from "fuse.js"; // Import Fuse.js
 
 import ShowCard from "../components/ShowCards"; // New component for individual show card
 import FilterBar from "../components/FilterBar"; // New component for filter bar
@@ -43,10 +43,11 @@ function Home() {
     if (searchTerm !== "") {
       const fuse = new Fuse(updatedFilteredShows, {
         keys: ["title"],
+        includeScore: true,
+        threshold: 0.4,
       });
-      updatedFilteredShows = fuse
-        .search(searchTerm)
-        .map((result) => result.item);
+      const searchResults = fuse.search(searchTerm);
+      updatedFilteredShows = searchResults.map((result) => result.item);
     }
 
     // Apply the selected genre filter
@@ -89,7 +90,15 @@ function Home() {
   };
 
   const filterByGenre = (genreId) => {
-    setSelectedGenre(selectedGenre === genreId ? null : genreId); // Toggle selected genre
+    console.log("Clicked genre button with ID:", genreId);
+
+    if (selectedGenre === genreId) {
+      console.log("Clearing genre filter");
+      setSelectedGenre(null);
+    } else {
+      console.log("Setting selected genre:", genreId);
+      setSelectedGenre(genreId);
+    }
   };
 
   return (
@@ -103,6 +112,7 @@ function Home() {
       <GenreButtons
         selectedGenre={selectedGenre}
         setSelectedGenre={setSelectedGenre}
+        filterByGenre={filterByGenre} // Pass the function as a prop
       />
       {isLoading ? (
         <p>Loading...</p>
