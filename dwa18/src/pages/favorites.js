@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import FavoriteEpisodes from "../components/FavoriteEpisodes";
-import SortOptions from "../components/SortOptions"; // Import the SortOptions component
+import SortOptions from "../components/SortOptions";
+import "./favorite.css";
 
-function FavoriteModal() {
+function FavoriteModal({ episode, title, showId, seasonNumber, timestamp }) {
   const [show, setShow] = useState(true);
   const [sortOrder, setSortOrder] = useState("ascending");
   const [sortType, setSortType] = useState("title");
@@ -12,23 +13,14 @@ function FavoriteModal() {
     setShow(false);
   };
 
-  // Sample data for favorite episodes
   const favoriteEpisodes = [
     {
-      episode: 1,
-      title: "Episode Title 1",
-      showId: "Show 1",
-      seasonNumber: 1,
-      timestamp: "2023-09-01",
+      episode: episode,
+      title: title,
+      showId: showId,
+      seasonNumber: seasonNumber,
+      timestamp: timestamp,
     },
-    {
-      episode: 2,
-      title: "Episode Title 2",
-      showId: "Show 2",
-      seasonNumber: 2,
-      timestamp: "2023-09-02",
-    },
-    // Add more episodes as needed
   ];
 
   // Function to sort favorite episodes based on sortType and sortOrder
@@ -58,12 +50,13 @@ function FavoriteModal() {
 
   return (
     <>
-      <Modal show={show} fullscreen onHide={handleClose}>
+      <Modal className="modal" show={show} fullscreen onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Favorite Episodes</Modal.Title>
+          <Modal.Title className="title">Favorite Episodes</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="body">
           <SortOptions
+            className="options"
             sortOrder={sortOrder}
             sortType={sortType}
             handleSortChange={(e) => setSortOrder(e.target.value)}

@@ -1,5 +1,5 @@
 import React from "react";
-import ShowSeasons from "./ShowSeasons"; // New component for show seasons
+import ShowSeasons from "./ShowSeasons";
 
 function ShowDetails({ show, currentShowId, setCurrentShowId }) {
   return (

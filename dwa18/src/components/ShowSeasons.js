@@ -7,7 +7,6 @@ import classes from "./ShowSeasons.module.css";
 import SeasonEpisodes from "./ShowEpisodes";
 
 function ShowSeasons({ showId }) {
-  // State and useEffect hooks go here
   const [seasons, setSeasons] = useState([]);
   const [showEpisodes, setShowEpisodes] = useState(false);
   const [epiShowId, setEpiShowId] = useState(null);

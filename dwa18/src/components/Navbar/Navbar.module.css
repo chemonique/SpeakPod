@@ -16,17 +16,6 @@
   font-family: "Jura", sans-serif;
 }
 
-/* .header ul {
-  list-style: none;
-  display: flex;
-  align-items: center;
-}
-
-.header li {
-  padding: 1.5rem;
-  justify-content: space-between;
-} */
-
 .header a {
   text-decoration: none;
   font-size: 1.5rem;

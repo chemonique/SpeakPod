@@ -3,6 +3,7 @@ import AudioPlayer from "./AudioPlayer";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import classes from "./ShowEpisodes.module.css";
+import FavoriteModal from "../pages/favorites";
 
 function SeasonEpisodes({ showId, seasonNumber }) {
   const [episodes, setEpisodes] = useState([]);
@@ -139,9 +140,15 @@ function SeasonEpisodes({ showId, seasonNumber }) {
                 handlePlay={handlePlayEpisode}
                 saveProgress={saveProgress}
                 userProgress={userProgress}
-                // Pass other props as needed
               />
             )}
+            <FavoriteModal
+              episode={favoriteEpisodes.episode}
+              title={favoriteEpisodes.title}
+              showId={showId}
+              seasonNumber={seasonNumber}
+              timestamp={new Date().toISOString()}
+            />
           </Card.Body>
         </Card>
       ))}
@@ -150,26 +157,3 @@ function SeasonEpisodes({ showId, seasonNumber }) {
 }
 
 export default SeasonEpisodes;
-
-//  <Card>
-//    <Card.Header>{episode.episode}</Card.Header>
-//    <Card.Body>
-//      <Card.Title>{episode.title}</Card.Title>
-//      <Card.Text>{episode.description}</Card.Text>
-//      <Button variant="primary" onClick={() => toggleFavorite(episode.episode)}>
-//        {favoriteEpisodes.find((ep) => ep.episode === episode.episode)
-//          ? "Remove from Favorites"
-//          : "Add to Favorites"}
-//      </Button>
-//      <Button onClick={() => handlePlayEpisode(episode)}>Play </Button>
-//      {playingEpisode && playingEpisode.episode === episode.episode && (
-//        <AudioPlayer
-//          playingEpisode={playingEpisode}
-//          handlePlay={handlePlayEpisode}
-//          saveProgress={saveProgress}
-//          userProgress={userProgress}
-//          // Pass other props as needed
-//        />
-//      )}
-//    </Card.Body>
-//  </Card>;

@@ -12,14 +12,12 @@
 .image {
   width: 220px;
   height: 220px;
-  /* margin-bottom: 10px; */
+
   border-radius: 20%;
   text-align: center;
 }
 
 .details {
-  /* display: flex;
-  flex-direction: column; */
   text-align: center;
   margin: 5px;
   padding: 4px;
