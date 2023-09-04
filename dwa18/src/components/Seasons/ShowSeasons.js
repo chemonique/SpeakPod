@@ -4,17 +4,20 @@ import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import classes from "./ShowSeasons.module.css";
-import SeasonEpisodes from "./ShowEpisodes";
+import SeasonEpisodes from "../Episodes/ShowEpisodes";
 
 function ShowSeasons({ showId }) {
+  // State variables for managing seasons and episode display
   const [seasons, setSeasons] = useState([]);
   const [showEpisodes, setShowEpisodes] = useState(false);
   const [epiShowId, setEpiShowId] = useState(null);
 
+  // State variables for selected season, user confirmation, and loading status
   const [selectedSeason, setSelectedSeason] = useState(null);
   const [userConfirmation, setUserConfirmation] = useState(true);
   const [loading, setLoading] = useState(true);
 
+  // Fetch data about seasons using useEffect when 'showId' or 'userConfirmation' changes
   useEffect(() => {
     async function fetchData() {
       try {
@@ -32,6 +35,7 @@ function ShowSeasons({ showId }) {
     fetchData();
   }, [showId, userConfirmation]);
 
+  // Function to fetch season episodes and set 'showEpisodes' and 'epiShowId' state
   const fetchSeasonEpisodes = (showId) => {
     setShowEpisodes(true);
     setEpiShowId(showId);
@@ -43,6 +47,7 @@ function ShowSeasons({ showId }) {
         <p>Loading...</p>
       ) : (
         <div>
+          {/* Dropdown to select a season */}
           <Dropdown className={classes.optionSeason}>
             <Dropdown.Toggle variant="secondary" id="season-dropdown">
               Select Season
@@ -62,6 +67,7 @@ function ShowSeasons({ showId }) {
           {selectedSeason && (
             <div className={classes.showseasons}>
               <div className={classes.details}>
+                {/* Display season details */}
                 <img
                   src={selectedSeason.image}
                   alt={`Season ${selectedSeason.season}`}
@@ -72,11 +78,13 @@ function ShowSeasons({ showId }) {
                 <p>Episodes: {selectedSeason.episodes.length}</p>
               </div>
               {showEpisodes ? (
+                // Render SeasonEpisodes component if 'showEpisodes' is true
                 <SeasonEpisodes
                   showId={showId}
                   seasonNumber={selectedSeason.season}
                 />
               ) : (
+                // Display a button to view episodes
                 <Button
                   className={classes.button}
                   variant="secondary"
@@ -94,4 +102,5 @@ function ShowSeasons({ showId }) {
     </div>
   );
 }
+
 export default ShowSeasons;

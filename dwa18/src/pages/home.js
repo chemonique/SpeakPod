@@ -89,13 +89,9 @@ function Home() {
   };
 
   const filterByGenre = (genreId) => {
-    console.log("Clicked genre button with ID:", genreId);
-
     if (selectedGenre === genreId) {
-      console.log("Clearing genre filter");
       setSelectedGenre(null);
     } else {
-      console.log("Setting selected genre:", genreId);
       setSelectedGenre(genreId);
     }
   };

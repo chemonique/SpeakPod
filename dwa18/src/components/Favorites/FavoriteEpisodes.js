@@ -1,6 +1,10 @@
 import React from "react";
 
 function FavoriteEpisodes({ favoriteEpisodes }) {
+  if (!favoriteEpisodes || favoriteEpisodes.length === 0) {
+    return <div>No favorite episodes yet.</div>;
+  }
+
   return (
     <div>
       {favoriteEpisodes.map((favEpisode) => (

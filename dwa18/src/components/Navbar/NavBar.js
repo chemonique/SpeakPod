@@ -6,7 +6,7 @@ const Navbar = () => {
     <header className={classes.header}>
       <Link to="/">
         <div className={classes.logo}>
-          SpeakP<i class="fi fi-rr-beacon"></i>d
+          SpeakP<i className="fi fi-rr-beacon"></i>d
         </div>
       </Link>
       <nav>

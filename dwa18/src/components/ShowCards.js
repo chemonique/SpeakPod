@@ -1,8 +1,9 @@
 import React from "react";
-import SeasonModal from "./SeasonModal";
 
+import SeasonModal from "./Seasons/SeasonModal";
 import genre_mapping from "./Genre/Genre";
 
+// This is a functional component called ShowCard that takes several props.
 function ShowCard({
   show,
   selectedGenre,
@@ -12,8 +13,10 @@ function ShowCard({
 }) {
   return (
     <div className="card_item" key={show.id}>
+      {/* Render an image and show title. */}
       <img src={show.image} alt={show.title} />
       <h2 className="title">{show.title}</h2>
+      {/* Render the genres of the show based on 'genre_mapping'. */}
       <p>
         Genres:{" "}
         {show.genres
@@ -21,11 +24,16 @@ function ShowCard({
           .join(", ")}
       </p>
 
+      {/* Display the number of seasons and the last update date of the show. */}
       <p>Seasons: {show.seasons}</p>
       <p>Last Updated: {new Date(show.updated).toLocaleDateString()}</p>
+
+      {/* Render a button to view more details and call 'fetchShowDetails' when clicked. */}
       <button className="seeMore" onClick={() => fetchShowDetails(show.id)}>
         View Details
       </button>
+
+      {/* Render the SeasonModal component when 'currentShowId' matches 'show.id'. */}
       {currentShowId === show.id && (
         <div className="show-details">
           <div>

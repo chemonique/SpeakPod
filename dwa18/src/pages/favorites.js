@@ -1,27 +1,19 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import FavoriteEpisodes from "../components/FavoriteEpisodes";
-import SortOptions from "../components/SortOptions";
+
+import FavoriteEpisodes from "../components/Favorites/FavoriteEpisodes";
+import SortOptions from "../components/Favorites/SortOptions";
 import "./favorite.css";
 
-function FavoriteModal({ episode, title, showId, seasonNumber, timestamp }) {
-  const [show, setShow] = useState(true);
+function FavoriteModal({ favoriteEpisodes }) {
+  // Pass favoriteEpisodes as an array
+  const [show, setShow] = useState(false);
   const [sortOrder, setSortOrder] = useState("ascending");
   const [sortType, setSortType] = useState("title");
 
   const handleClose = () => {
     setShow(false);
   };
-
-  const favoriteEpisodes = [
-    {
-      episode: episode,
-      title: title,
-      showId: showId,
-      seasonNumber: seasonNumber,
-      timestamp: timestamp,
-    },
-  ];
 
   // Function to sort favorite episodes based on sortType and sortOrder
   const sortFavoriteEpisodes = () => {

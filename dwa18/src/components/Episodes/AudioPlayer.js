@@ -7,12 +7,13 @@ function AudioPlayer({
   resetProgress,
   saveProgress,
 }) {
-  // Use local state to track the current playback time and episode duration
+  // Local state to track playback time and duration
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    // Event listeners to track playback time and duration
     const audioPlayer = document.getElementById("audio-player");
     if (audioPlayer) {
       audioPlayer.addEventListener("timeupdate", () => {
@@ -28,13 +29,13 @@ function AudioPlayer({
         setShowModal(false);
       });
 
-      // Ensure currentTime and duration are set initially
+      // Initialize currentTime and duration
       setCurrentTime(audioPlayer.currentTime);
       setDuration(audioPlayer.duration);
     }
 
+    // Cleanup event listeners when unmounting
     return () => {
-      // Cleanup event listeners
       if (audioPlayer) {
         audioPlayer.removeEventListener("timeupdate", () => {});
         audioPlayer.removeEventListener("durationchange", () => {});
@@ -43,7 +44,8 @@ function AudioPlayer({
       }
     };
   }, []);
-  // Handle playback progress and save progress when the user stops listening
+
+  // Handle stopping playback and saving progress
   const handleStop = () => {
     saveProgress(playingEpisode.episode, currentTime);
     handlePause();
@@ -68,6 +70,7 @@ function AudioPlayer({
 
   return (
     <div>
+      {/* Modal to confirm closing the audio player */}
       {showModal && (
         <div className="modal">
           <div className="modal-content">
@@ -76,21 +79,11 @@ function AudioPlayer({
           </div>
         </div>
       )}
-      <audio
-        id="audio-player"
-        controls
-        onPlay={() =>
-          handlePlay(playingEpisode.episode, playingEpisode.timestamp)
-        }
-        onPause={handleStop}
-        src={playingEpisode.episode.file}
-        type="audio/mpeg"
-      />
-      <p>
-        Listening: Episode {playingEpisode.episode.episode}, Timestamp:{" "}
-        {formatTimestamp(currentTime)} / {formatTimestamp(duration)}
-      </p>
-      <button onClick={resetProgress}>Reset Progress</button>
+      {/* Audio player component */}
+      <audio controls>
+        <source src={playingEpisode.file} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
     </div>
   );
 }

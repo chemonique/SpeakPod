@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import AudioPlayer from "./AudioPlayer";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+
+import FavoriteModal from "../../pages/favorites";
+import AudioPlayer from "./AudioPlayer";
 import classes from "./ShowEpisodes.module.css";
-import FavoriteModal from "../pages/favorites";
 
 function SeasonEpisodes({ showId, seasonNumber }) {
+  // State variables for episodes, loading status, favorite episodes, playing episode, and user progress
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [favoriteEpisodes, setFavoriteEpisodes] = useState([]);
@@ -13,11 +15,12 @@ function SeasonEpisodes({ showId, seasonNumber }) {
   const [userProgress, setUserProgress] = useState({});
 
   useEffect(() => {
+    // Fetch episodes and load user progress on component mount
     fetchSeasonEpisodes(showId, seasonNumber);
-    // Load user progress on component mount
     loadUserProgress();
   }, [showId, seasonNumber]);
 
+  // Function to fetch episodes for a season
   const fetchSeasonEpisodes = async (showId, seasonNumber) => {
     try {
       const response = await fetch(
@@ -32,6 +35,7 @@ function SeasonEpisodes({ showId, seasonNumber }) {
     }
   };
 
+  // Toggle favorite status of an episode
   const toggleFavorite = (episodeNumber) => {
     if (favoriteEpisodes.find((ep) => ep.episode === episodeNumber)) {
       // Remove episode from favorites
@@ -56,8 +60,8 @@ function SeasonEpisodes({ showId, seasonNumber }) {
     }
   };
 
+  // Handle playing an episode
   const handlePlayEpisode = (episode) => {
-    // Set the currently playing episode
     setPlayingEpisode(episode);
   };
 
@@ -110,14 +114,16 @@ function SeasonEpisodes({ showId, seasonNumber }) {
 
   return (
     <div>
+      {/* Map through episodes and render each episode as a Card */}
       {episodes.map((episode) => (
-        <Card className={classes.body}>
+        <Card key={episode.episode} className={classes.body}>
           <Card.Header className={classes.header}>
             Episode: {episode.episode}
           </Card.Header>
           <Card.Body>
             <Card.Title>{episode.title}</Card.Title>
-            <Card.Text>{episode.description}</Card.Text>{" "}
+            <Card.Text>{episode.description}</Card.Text>
+            {/* Button to play an episode */}
             <Button
               className={classes.button}
               variant="secondary"
@@ -134,6 +140,7 @@ function SeasonEpisodes({ showId, seasonNumber }) {
                 ? "Remove from Favorites"
                 : "Add to Favorites"}
             </Button>
+            {/* Render AudioPlayer for the currently playing episode */}
             {playingEpisode && playingEpisode.episode === episode.episode && (
               <AudioPlayer
                 playingEpisode={playingEpisode}
@@ -142,13 +149,8 @@ function SeasonEpisodes({ showId, seasonNumber }) {
                 userProgress={userProgress}
               />
             )}
-            <FavoriteModal
-              episode={favoriteEpisodes.episode}
-              title={favoriteEpisodes.title}
-              showId={showId}
-              seasonNumber={seasonNumber}
-              timestamp={new Date().toISOString()}
-            />
+            {/* Display a modal for managing favorite episodes */}
+            <FavoriteModal favoriteEpisodes={favoriteEpisodes} />
           </Card.Body>
         </Card>
       ))}

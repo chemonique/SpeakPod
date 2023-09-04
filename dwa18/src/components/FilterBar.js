@@ -1,8 +1,10 @@
 import React from "react";
 
+// This is a functional component called FilterBar that handles search and sorting.
 function FilterBar({ searchTerm, setSearchTerm, sortBy, setSortBy }) {
   return (
     <div id="filter">
+      {/* Input for searching by title */}
       <input
         type="text"
         id="search-input"
@@ -10,6 +12,7 @@ function FilterBar({ searchTerm, setSearchTerm, sortBy, setSortBy }) {
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
       />
+      {/* Dropdown for sorting options */}
       <select
         id="sort-select"
         value={sortBy}
