@@ -9,10 +9,10 @@ The goal of my Project was to create a fully functional podcast app that meets t
 ## Technology Stack
 I had the flexibility to choose the technology stack for this project.
 
-Framework: Create React App (CRA)
-Language: JavaScript
-Data Source: Data is fetched from the external podcast API at https://podcast-api.netlify.app.
-Deployment: The project will be deployed to a custom Netlify URL.
+- Framework: Create React App (CRA)
+- Language: JavaScript
+- Data Source: Data is fetched from the external podcast API at https://podcast-api.netlify.app.
+- Deployment: The project will be deployed to a custom Netlify URL.
 
 ## User Stories
 The project aims to fulfill 50 user stories, ensuring that the app provides a fully functional podcast experience. 
